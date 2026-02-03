@@ -1,0 +1,44 @@
+{
+    "video_id": "pullup_example.mp4",
+    "frame_count": 120,
+    "fps": 30,
+    "smoothed_keypoints": "[[x,y] for 17 keypoints per frame] - Shape: [120, 17, 2]",
+    "normalized_keypoints": "Scale-invariant version - Shape: [120, 17, 2]",
+    "scores": "Confidence scores [0-1] - Shape: [120, 17]",
+    "_note": "This is a template. Actual data will be large arrays of coordinates.",
+    "_example_frame_0": {
+        "keypoint_0_nose": [
+            320.5,
+            145.2
+        ],
+        "keypoint_5_left_shoulder": [
+            285.1,
+            220.8
+        ],
+        "keypoint_6_right_shoulder": [
+            355.3,
+            218.4
+        ],
+        "note": "Full smoothed_keypoints array would contain all 120 frames × 17 keypoints"
+    },
+    "_keypoint_reference": {
+        "0": "Nose",
+        "1": "Left Eye",
+        "2": "Right Eye",
+        "3": "Left Ear",
+        "4": "Right Ear",
+        "5": "Left Shoulder",
+        "6": "Right Shoulder",
+        "7": "Left Elbow",
+        "8": "Right Elbow",
+        "9": "Left Wrist",
+        "10": "Right Wrist",
+        "11": "Left Hip",
+        "12": "Right Hip",
+        "13": "Left Knee",
+        "14": "Right Knee",
+        "15": "Left Ankle",
+        "16": "Right Ankle"
+    },
+    "_usage_example_python": "data = json.load(open('analysis.json')); left_elbow_frame10 = data['smoothed_keypoints'][10][7]"
+}
