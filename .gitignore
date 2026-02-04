@@ -1,0 +1,29 @@
+# OS files
+.DS_Store
+
+# Environments
+venv/
+venv_vision/
+.env
+
+# Datasets & Large Files
+Fitness-AQA-Datasets/
+vision_pipeline/output/
+vision_pipeline/examples.tar.gz
+*.pdf
+*.zip
+*.tar.gz
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Models & Tools
+VideoPose3D/
+pretrained_h36m_detectron_coco.bin
+output/
+
+# IDEs
+.vscode/
+.idea/
