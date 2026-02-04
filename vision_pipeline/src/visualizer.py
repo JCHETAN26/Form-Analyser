@@ -12,7 +12,7 @@ SKELETON = [
     (1, 3), (2, 4), (3, 5), (4, 6)
 ]
 
-def visualize_pose(video_path, json_path, output_path):
+def visualize_pose(video_path, json_path, output_path, analysis_data=None):
     # 1. Load data
     with open(json_path, 'r') as f:
         data = json.load(f)
@@ -37,21 +37,43 @@ def visualize_pose(video_path, json_path, output_path):
         
         kps = keypoints_seq[frame_idx]
         
-        # Draw skeleton lines
+        # --- DRAW ANALYTICS ---
+        if analysis_data:
+            # Draw Rep Count
+            cv2.putText(frame, f"REPS: {analysis_data['rep_count']}", (50, 50), 
+                        cv2.FONT_HERSHEY_DUPLEX, 1.2, (255, 255, 255), 2)
+            
+            # Draw Current Frame Feedback
+            if frame_idx < len(analysis_data['frame_analysis']):
+                frame_info = analysis_data['frame_analysis'][frame_idx]
+                feedback = frame_info['feedback']
+                color = (0, 255, 0) if feedback in ["Good", "Perfect"] else (0, 165, 255) # Orange for warning
+                if feedback in ["Shallow!", "Poor", "Full Pull Required"]: color = (0, 0, 255)
+                
+                cv2.putText(frame, f"STATUS: {feedback}", (50, 100), 
+                            cv2.FONT_HERSHEY_DUPLEX, 1.0, color, 2)
+                
+                # Draw Angle Overlay (e.g., knee for squat)
+                if 'knee_angle' in frame_info:
+                    knee_pt = tuple(kps[14].astype(int)) # Right knee as example
+                    cv2.putText(frame, f"{int(frame_info['knee_angle'])}deg", knee_pt, 
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 0), 2)
+                elif 'elbow_angle' in frame_info:
+                    elbow_pt = tuple(kps[8].astype(int)) # Right elbow
+                    cv2.putText(frame, f"{int(frame_info['elbow_angle'])}deg", elbow_pt, 
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 0), 2)
+
+        # --- DRAW SKELETON ---
         for pair in SKELETON:
             p1 = tuple(kps[pair[0]].astype(int))
             p2 = tuple(kps[pair[1]].astype(int))
-            # Only draw if both points are non-zero (simple check for missing data)
             if p1 != (0,0) and p2 != (0,0):
                 cv2.line(frame, p1, p2, (0, 255, 0), 2)
         
-        # Draw keypoint dots
         for i, kp in enumerate(kps):
             pt = tuple(kp.astype(int))
             if pt != (0,0):
                 cv2.circle(frame, pt, 4, (0, 0, 255), -1)
-                # Optional: Label the index for debugging
-                # cv2.putText(frame, str(i), pt, cv2.FONT_HERSHEY_SIMPLEX, 0.4, (255, 255, 255), 1)
 
         out.write(frame)
         frame_idx += 1
