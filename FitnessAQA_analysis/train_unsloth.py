@@ -25,6 +25,8 @@ import os
 
 # Limit to 1 GPU to avoid multi-device conflicts
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+# Disable TorchDynamo — incompatible with Unsloth's fused CE loss on this setup
+os.environ["TORCHDYNAMO_DISABLE"] = "1"
 
 import sys
 import torch
@@ -199,7 +201,7 @@ def main():
             "gate_proj", "up_proj", "down_proj",
         ],
         bias="none",
-        use_gradient_checkpointing="unsloth",  # 30% less VRAM
+        use_gradient_checkpointing=True,  # Changed from "unsloth" to fix Dynamo error
         random_state=args.seed,
     )
     
