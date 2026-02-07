@@ -22,7 +22,12 @@ Author: FitnessAQA Capstone
 import argparse
 import json
 import os
+
+# Limit to 1 GPU to avoid multi-device conflicts
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+
 import sys
+import torch
 
 
 def parse_args():
@@ -175,7 +180,7 @@ def main():
         model_name=args.model,
         max_seq_length=args.max_seq_length,
         load_in_4bit=args.load_in_4bit,
-        dtype=None,  # Auto-detect (float16 for V100, bfloat16 for Ampere+)
+        dtype=torch.float16,
     )
     
     print(f"  Model loaded: {model.config._name_or_path}")
@@ -274,8 +279,8 @@ def main():
         eval_steps=args.save_steps if eval_dataset else None,
         
         # Performance
-        fp16=not model.config.to_dict().get("torch_dtype", "") == "bfloat16",
-        bf16=model.config.to_dict().get("torch_dtype", "") == "bfloat16",
+        fp16=True,
+        bf16=False,
         optim="adamw_8bit",
         lr_scheduler_type="cosine",
         
@@ -296,7 +301,6 @@ def main():
     # Show memory stats
     gpu_stats = None
     try:
-        import torch
         if torch.cuda.is_available():
             gpu_stats = torch.cuda.get_device_properties(0)
             reserved = round(torch.cuda.max_memory_reserved() / 1024**3, 2)
