@@ -1,0 +1,44 @@
+# FitnessAQA Analysis - Requirements
+# Time Series Encoder + Unsloth LLM Fine-Tuning Pipeline
+#
+# Install: pip install -r requirements.txt
+# For GPU training: ensure CUDA 11.8+ and PyTorch 2.1+ are installed
+#
+# Note: unsloth requires a CUDA-capable GPU (Colab T4/A100, or local)
+# For CPU-only dataset preparation, only numpy/scipy are needed.
+
+# ─── Core Scientific Computing ───
+numpy>=1.24.0
+scipy>=1.10.0
+matplotlib>=3.7.0
+
+# ─── Unsloth AI (4x faster fine-tuning) ───
+# Install unsloth via: pip install "unsloth[colab-new] @ git+https://github.com/unslothai/unsloth.git"
+# Or for stable release:
+unsloth>=2024.8
+
+# ─── Hugging Face Ecosystem ───
+torch>=2.1.0
+transformers>=4.38.0
+datasets>=2.16.0
+accelerate>=0.26.0
+peft>=0.8.0
+trl>=0.7.0
+bitsandbytes>=0.42.0
+
+# ─── Tokenization ───
+sentencepiece>=0.1.99
+protobuf>=3.20.0
+tokenizers>=0.15.0
+
+# ─── Data Processing ───
+pandas>=2.0.0
+
+# ─── Optional: Experiment Tracking ───
+# wandb>=0.16.0
+
+# ─── Optional: GGUF Export (for Ollama/llama.cpp) ───
+# llama-cpp-python>=0.2.0
+
+# ─── Optional: Flash Attention (faster on Ampere+ GPUs) ───
+# flash-attn>=2.5.0

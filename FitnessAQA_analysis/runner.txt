@@ -1,0 +1,8 @@
+# 1. Generate dataset (36 diverse examples from your pullup data)
+python dataset_builder.py
+
+# 2. Train with Unsloth (needs GPU — Colab T4 works)
+python train_unsloth.py --data ./outputs/train_alpaca.json
+
+# 3. Inference
+python inference.py --model ./outputs/fitness_gpt/lora_adapter --json ./data/pullup_analysis.json

@@ -13,7 +13,8 @@ vision_pipeline/examples.tar.gz
 *.pdf
 *.zip
 *.tar.gz
-
+*.mp4
+*.avi
 # Python
 __pycache__/
 *.py[cod]
