@@ -1,24 +1,87 @@
 # OS files
 .DS_Store
+Thumbs.db
 
 # Environments
 venv/
 venv_vision/
+venv_fe/
 .env
+ENV/
+env/
 
-# Datasets & Large Files
+# Large Video Files
+*.mp4
+*.avi
+*.mov
+*.mkv
+test_videos/
+test_results/*.mp4
+pullup.mp4
+pullup_visualization.mp4
+
+# Large Model Files
+*.pt
+*.pth
+*.bin
+*.onnx
+yolov8*.pt
+pretrained_*.bin
+
+# Large Data Files
+*_keypoints.json
+pullup_analysis.json
+test_results/*_keypoints.json
+
+# Generated Graphs (optional - uncomment to include)
+test_results/graphs/*.png
+test_results/comprehensive_graphs/*.png
+# FitnessAQA_analysis/outputs/*.png
+
+# Datasets & Large Directories
 Fitness-AQA-Datasets/
+VideoPose3D/
+WHAM-main/
+physcap_experimental/
+team_final_push/
+team_final_push_safe/
+youtube-dl-master/
+Code_Release/
+
+# Temporary/Output Directories
 vision_pipeline/output/
-vision_pipeline/examples.tar.gz
+output/
+output_web/
+uploads/
+
+# Archives
 *.pdf
 *.zip
 *.tar.gz
+vision_pipeline/examples.tar.gz
+xtcocotools.tar.gz
 
 # Python
 __pycache__/
 *.py[cod]
 *$py.class
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Logs
+*.log
+batch_results.log
 
 # IDEs
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
